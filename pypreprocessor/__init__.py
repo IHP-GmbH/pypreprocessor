@@ -8,7 +8,7 @@ __version__ = '0.7.7'
 import sys
 import os
 import traceback
-import imp
+import importlib
 import io
 class preprocessor:
     def __init__(self, inFile=sys.argv[0], outFile='', defines=[], \
@@ -237,11 +237,7 @@ class preprocessor:
         trace = traceback.format_exc().splitlines()
         index = 0
         for line in trace:
-            if index == (len(trace) - 2):
-                print(line.replace("<string>", self.input))
-            else:
-                print(line)
-            index += 1
+            print(line.replace("\"<string>\"", self.input))
 
     # parsing/processing
     def parse(self):
