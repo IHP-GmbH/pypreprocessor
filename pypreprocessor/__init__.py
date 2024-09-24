@@ -8,6 +8,7 @@ __version__ = '0.7.7'
 import sys
 import os
 import traceback
+import imp
 import importlib
 import io
 class preprocessor:
