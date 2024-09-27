@@ -70,9 +70,9 @@ The syntax for pypreprocessor uses a select subset of the stanard c-style prepro
 #undef constant
 ```
 
-* makes the subsequent block of code available if the specified constant is set
+* makes the subsequent block of code available if one of the specified constants is set
 ```python
-#ifdef constant
+#ifdef constant [|| constant2 ...]
 ```
 
 * makes the subsequent block of code available if all of the preceding #ifdef statements return false

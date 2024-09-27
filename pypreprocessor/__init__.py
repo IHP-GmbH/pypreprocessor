@@ -3,7 +3,7 @@
 
 __author__ = 'Evan Plaice'
 __coauthor__ = 'Hendi O L, Epikem'
-__version__ = '0.7.7'
+__version__ = '0.8.0'
 
 import sys
 import os
@@ -146,12 +146,21 @@ class preprocessor:
                 return False, True
         # handle #ifdef directives
         elif line[:len(self.escape) + 5] == self.escape + 'ifdef':
-            if len(line.split()) != 2:
+            splitted_line = line.split()
+            if len(splitted_line) < 2 or len(splitted_line) % 2 != 0:
                 self.exit_error(self.escape + 'ifdef')
-            else:
-                self.__ifblocks.append(self.search_defines(line.split()[1]))
-                self.__ifconditions.append(line.split()[1])
-                return False, True
+            for i, val in enumerate(splitted_line):
+                if i > 1 and i % 2 == 0 and val != '||':
+                    self.exit_error(self.escape + 'ifdef')
+
+            defined = False
+            for i, val in enumerate(splitted_line):
+                if i % 2 == 1:
+                    defined = defined or self.search_defines(val)
+
+            self.__ifblocks.append(defined)
+            self.__ifconditions.append(line.split()[1])
+            return False, True
         # handle #else...
         # handle #elseif directives
         elif line[:len(self.escape) + 6] == self.escape + 'elseif':
