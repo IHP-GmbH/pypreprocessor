@@ -3,18 +3,17 @@
 
 __author__ = 'Evan Plaice'
 __coauthor__ = 'Hendi O L, Epikem'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 
 import sys
 import os
 import traceback
-import imp
 import importlib
 import io
 class preprocessor:
     def __init__(self, inFile=sys.argv[0], outFile='', defines=[], \
             removeMeta=False, escapeChar=None, mode=None, escape='#', \
-            run=True, resume=False, save=True):
+            run=False, resume=False, save=True):
         # public variables
         self.defines = defines
         self.input = inFile
@@ -309,6 +308,7 @@ class preprocessor:
             output_file.close()
 
         if self.run:
+            import imp
             # if this module is loaded as a library override the import
             if imp.lock_held() is True:
                 self.override_import()
